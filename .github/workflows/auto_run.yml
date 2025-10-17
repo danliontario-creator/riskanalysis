@@ -1,0 +1,34 @@
+name: Portfolio Auto Refresh
+
+on:
+  schedule:
+    - cron: "0 22 * * 1-5"   # Run at 10 PM UTC (after market close)
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Risk Analysis
+        run: |
+          python RiskAnalysis_Advanced.py
+
+      - name: Commit & Push updated report
+        run: |
+          git config --global user.email "danli@example.com"
+          git config --global user.name "Dan Li"
+          git add reports/
+          git commit -m "Automated report update $(date +'%Y-%m-%d')"
+          git push
