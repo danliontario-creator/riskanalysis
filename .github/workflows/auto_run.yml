@@ -2,7 +2,7 @@ name: Portfolio Auto Refresh
 
 on:
   schedule:
-    - cron: "0 22 * * 1-5"   # Run at 10 PM UTC (after market close)
+    - cron: "0 22 * * 1-5"  
   workflow_dispatch:
 
 jobs:
